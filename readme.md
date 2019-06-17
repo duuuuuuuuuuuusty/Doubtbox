@@ -22,3 +22,17 @@
 | refreshDecayReset  | integer | Resets refresh timer after this many empty refreshes | default: 20 |
 | settingsStorage  | 'field_XYZ' OR 'cache' OR off | Switches between settings storage types. 'field_20' will set and fetch settings from custom profile field #20. 'cache' will store settings in localStorage  | default: off  |
 | shoutSource  | URL string | Changes where to source messages from  | '/index.php?act=Shoutbox'  |
+
+# Custom Markup Structure
+The doubtbox can configure message structure to specification. The following elements compose the default structure:
+| Element classname | purpose | required? |
+|------------- | ------------- | ------------- |
+| _doubtboxMessage_ | Message container. Highest parent in hierarchy. Contains all message information in attributes | required |
+| _dbMsgInnerWrap_ | Inner wrapper for message | optional |
+| _dbUserAvatar_ | img: Avatar element | required (may be hidden via CSS) |
+| _dbEditControl_ | span: Allows administrators to edit messages | required (may be hidden via CSS) |
+| _dbDelControl_ | span: Allows administrators to delete messages | required (may be hidden via CSS) |
+| _dbMsgTime_ | span: Contains timestamp information | required (may be hidden via CSS) |
+| _dbMsgUser a_ | span a: Links to user ID | required (may be hidden via CSS) |
+| _dbMsgBodyWrap_ | span: Message content parent container | optional |
+| _dbMsgBody_ | p: Message content element | required |
