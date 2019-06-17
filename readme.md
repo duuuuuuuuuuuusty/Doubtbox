@@ -26,4 +26,5 @@
 # Custom Markup Structure
 The doubtbox can configure message structure to specification. The following elements compose the default structure:
 | Element classname | purpose | required? |
+|------------- | ------------- | ------------- |
 
