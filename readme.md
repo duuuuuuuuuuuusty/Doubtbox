@@ -3,6 +3,11 @@
 * Requires JQuery 1.8+
 * Coming soon to a Git near you
 
+# Installation
+Install to CSS, HTML, and JS to custom page. Use page <% TAG %> to append.
+Install doubtboxWrapper.js to **wrapper** body
+Configure options in doubtboxWrapper.js
+
 | Option  | Inputs | Behavior | Default behavior |
 | ------------- | ------------- | ------------- | ------------- |
 | Timestamp  | 'relative' OR 'absolute'  | Affects timestamp type: 'Ten minutes ago' or '12 May 19, 5:10 pm'. Relative timestamping rolls over to absolute after 3 weeks | absolute timing |
