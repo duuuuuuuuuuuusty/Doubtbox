@@ -4,9 +4,9 @@
 * Coming soon to a Git near you
 
 # Installation
-Install to CSS, HTML, and JS to custom page. Use page <% TAG %> to append.
-Install doubtboxWrapper.js to **wrapper** body
-Configure options in doubtboxWrapper.js
+* Install to CSS, HTML, and JS to custom page. Use page <% TAG %> to append.
+* Install doubtboxWrapper.js to **wrapper** body
+* Configure options in doubtboxWrapper.js
 
 | Option  | Inputs | Behavior | Default behavior |
 | ------------- | ------------- | ------------- | ------------- |
