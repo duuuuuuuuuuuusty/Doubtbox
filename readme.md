@@ -1,23 +1,24 @@
 # Doubtbox v.01
-* Non-iframe based c-box mimicry for JC Ink's default shoutbox
+* JQuery based c-box mimicry for JC Ink's default shoutbox
 * Requires JQuery 1.8+
 * Coming soon to a Git near you
 
-| Option  | Inputs | Behavior | Defaults |
+| Option  | Inputs | Behavior | Default behavior |
 | ------------- | ------------- | ------------- | ------------- |
-| Timestamp  | 'relative' OR 'absolute'  | Affects timestamp type: 'Ten minutes ago' or '12 May 19, 5:10 pm' | relative  |
-| Username  | 'default' OR 'custom'  | Switches between logged-in name and user-supplied nickname (effects are retroactive) | 'default'  |
-| defaultUsername  | \<!-- \|field_X\| -->  | Loads nickname from custom profile field, if available | off  |
-| typeOfID  | \<!-- \|parent_id\| -->  | Nickname will link to parent account | off  |
-| avatar  | 'default' OR 'custom'  | Switches between logged-in avatar and user-supplied avatar (effects are retroactive)  | 'default'  |
-| customMarkup | markup string  | Accepts a string of markup for custom message structures. Must include all default element classnames  | `'<div class="doubtboxMessage"><span class="dbMsgInnerWrap"><img class="dbUserAvatar"><span class="dbEditControl">[edit]</span><span class="dbDelControl">[X]</span><span class="dbMsgTime"></span><span class="dbMsgUser"><a></a></span><span class="dbMsgBodyWrap"><p class="dbMsgBody"></p></span></span></div>'` |
-| channels  | array of strings  | Accepts an array of channel names. Leave blank for none  | none  |
-| defaultChannel  | string  | If channels are active, determines which is selected on load  | off, selects first channel  |
-| volumeLevels  | array of integers =< 1  | Accepts array of volume levels as integers  | [1, .4, 0]  |
-| shoutPerPage  | integer  | Changes how many messages appear per-page. Cannot be higher than shoutbox configuration  | 10  |
-| refreshType  | 'interval' | Switches between cyclic refreshing and manual refreshing  | interval  |
-| refreshBase  | milliseconds | Affects the base refresh timer   | 5000  |
-| refreshDecay  | milliseconds | Adds this number to refreshBase for every refresh with zero updates | 1000  |
-| refreshDecayReset  | integer | Resets refresh timer after this many empty refreshes  | 20 |
-| settingsStorage  | 'field_XYZ' OR 'cache' | Switches between settings storage types. 'field_20' will set and fetch settings from custom profile field #20. 'cache' will store settings in localStorage  | off  |
-| shoutSource  | relative URL string | Changes where to source messages from  | '/index.php?act=Shoutbox'  |
+| Timestamp  | 'relative' OR 'absolute'  | Affects timestamp type: 'Ten minutes ago' or '12 May 19, 5:10 pm'. Relative timestamping rolls over to absolute after 3 weeks | absolute timing |
+| Username  | 'custom' OR 'default'  | Allows users to change their chat nicknames (effects are retroactive) | default: uses logged-in username |
+| defaultUsername  | \<!-- \|field_X\| --> OR default  | Loads nickname from custom profile field, if available | default: 'null'. no profile fields are utilized |
+| typeOfID  | parent OR default  | Nickname will link to parent account | default: nickname links to logged-in user ID |
+| avatar  | custom OR default  | Allows users to supply their own avatar URL. Effects are retroactive: If changed to default, will load up-to-date avatar image from accounts | default: loads account avatar  |
+| customMarkup | markup string OR leave empty  | Accepts a string of markup for custom message structures. Must include all default element classnames: see 'custom markup' section for more details  | `'<div class="doubtboxMessage"><span class="dbMsgInnerWrap"><img class="dbUserAvatar"><span class="dbEditControl">[edit]</span><span class="dbDelControl">[X]</span><span class="dbMsgTime"></span><span class="dbMsgUser"><a></a></span><span class="dbMsgBodyWrap"><p class="dbMsgBody"></p></span></span></div>'` |
+| channels  | array of strings  | Accepts an array of channel names. Defaults to a single channel named 'chatter', which may be hidden with CSS | \['Chatter'] |
+| defaultChannel  | 'cache' OR string | Determines which channel is active by default. 'cache' will attempt to load stored channel preference | default: selects first channel  |
+| volumeLevels  | array of integers =< 1, greatest to smallest  | Accepts array of volume levels as integers. Note: Volume icons controlled by CSS  | default: \[1, .4, 0]  |
+| shoutPerPage  | integer  | Should match value in Shoutbox Settings; Controls page jump value | 20  |
+| invertFlow | true OR false | Inverts the flow direction of messages; TRUE loads newest messages at bottom | default: false |
+| refreshType  | 'interval' OR off | Switches between cyclic refreshing and manual refreshing. Interval is calculated as (refreshBase + (refreshDecay * emptyRefresh)), where *emptyRefresh* is the number of times a refresh has yielded no new messages  | default: interval |
+| refreshBase  | integer of milliseconds | Affects the base refresh timer | default: 5000  |
+| refreshDecay  | integer of milliseconds | Adds this number to refreshBase for every refresh with zero updates | default: 1000  |
+| refreshDecayReset  | integer | Resets refresh timer after this many empty refreshes | default: 20 |
+| settingsStorage  | 'field_XYZ' OR 'cache' OR off | Switches between settings storage types. 'field_20' will set and fetch settings from custom profile field #20. 'cache' will store settings in localStorage  | default: off  |
+| shoutSource  | URL string | Changes where to source messages from  | '/index.php?act=Shoutbox'  |
