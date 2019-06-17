@@ -1,11 +1,13 @@
 # Doubtbox v.01
 * JQuery based c-box mimicry for JC Ink's default shoutbox
 * Requires JQuery 1.8+
+* Can allow BB code and HTML
+* Utilizes DOMPurify to filter dangerous messages
 * Coming soon to a Git near you
 
 # Installation
 * Install to CSS, HTML, and JS to custom page. Use page <% TAG %> to append
-* Upload DOMpurify.js and append to page
+* Upload purify_min.js and append to page
 * Upload notification audio and append its source to _.doubtbox-audio_ element in page
 * Install doubtboxWrapper.js to **wrapper** body
 * Configure options in doubtboxWrapper.js
