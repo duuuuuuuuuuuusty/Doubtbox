@@ -65,4 +65,4 @@ Usage for the end-user is fairly straightforward, and should be familiar if you'
 
 **[edit] and [X]** are functional to, and appear only for, administrator accounts (by default, user group 4 - change in CSS). These buttons allow staff to delete messages (with a confirmation dialogue), or edit messages including avatar, text content, name, and/or channel. Timestamps cannot be changed without navigating to */act=Shoutbox* and manually editing the timestamp variable.
 
-**Send** predictably sends the message, so long as the message field has content. While the message field has focus, the enter key will also send a message.
+**Send** predictably sends the message, so long as the message field has content. While the message field has focus, the enter key will also send a message. Newly sent content will appear first as ghosted messages, and later be updated when it is confirmed that the message reached the server.
