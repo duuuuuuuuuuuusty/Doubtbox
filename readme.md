@@ -19,6 +19,7 @@
 | defaultUsername  | \<!-- \|field_X\| --> OR default  | Loads nickname from custom profile field, if available | default: 'null'. no profile fields are utilized |
 | typeOfID  | parent OR default  | Nickname will link to parent account | default: nickname links to logged-in user ID |
 | avatar  | custom OR default  | Allows users to supply their own avatar URL. Effects are retroactive: If changed to default, will load up-to-date avatar image from accounts | default: loads account avatar  |
+| allowMarkup | 'none', 'bb', 'html', 'both' | Changes what markup may be used in message content. 'bb' allows the usage of all custom and standard BB code currently installed on the forum; 'html' allows raw HTML to be used in content (see note about filtering), but excludes BB code; 'both' parses both BB and HTML; 'none' allows only text. In terms of performance, 'BB' and 'none' are fastest, but the difference is fairly minimal | default: 'bb' |
 | customMarkup | markup string OR leave empty  | Accepts a string of markup for custom message structures. Must include all default element classnames: see 'custom markup' section for more details  | `'<div class="doubtboxMessage"><span class="dbMsgInnerWrap"><img class="dbUserAvatar"><span class="dbEditControl">[edit]</span><span class="dbDelControl">[X]</span><span class="dbMsgTime"></span><span class="dbMsgUser"><a></a></span><span class="dbMsgBodyWrap"><p class="dbMsgBody"></p></span></span></div>'` |
 | channels  | array of strings  | Accepts an array of channel names. Defaults to a single channel named 'chatter', which may be hidden with CSS | \['Chatter'] |
 | defaultChannel  | 'cache' OR string | Determines which channel is active by default. 'cache' will attempt to load stored channel preference | default: selects first channel  |
@@ -49,6 +50,8 @@ The doubtbox can configure message structure to specification. The following ele
 
 # Usage & Notes
 It's important that the sum of the refresh timer is not set too low, nor the shoutPerPage set too high, as each refresh requests the shoutbox page *and* performs check functions to match message IDs and content length. While this is not strenuous for most computers, it is still something of a burden and ought to be minimized. If you want instantaneous updates, I'd recommend using an actual C-Box, or a Discord integration.
+
+**HTML sanitization** is implemented via the DOMPurify library, a well regarded utility for stripping strings and markup alike of various attack vectors. You can read about it [here](https://github.com/cure53/DOMPurify "DOMPurify on Github")
 
 
 Usage for the end-user is fairly straightforward, and should be familiar if you've ever used a c-box.
