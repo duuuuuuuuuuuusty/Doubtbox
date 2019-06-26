@@ -53,7 +53,7 @@ It's important that the sum of the refresh timer is not set too low, nor the sho
 
 Usage for the end-user is fairly straightforward, and should be familiar if you've ever used a c-box.
 
-**Previous** and *Next* buttons allow users to traverse message history, and suspend refreshing while viewing. Refreshing or sending a message will bring the user to the present content.
+**Previous** and **Next** buttons allow users to traverse message history, and suspend refreshing while viewing. Refreshing or sending a message will bring the user to the present content.
 
 **Channels** allow the staff to set up separate chatter areas for different topics. Remember that each channel technically shares the same refresh stream - if all of the recent messages belong to one channel, other channels will appear empty, even if there are messages for them further in the history. Unselected channel tabs with new content are modified with the *.doubtbox-new-messages* class.
 
@@ -64,3 +64,5 @@ Usage for the end-user is fairly straightforward, and should be familiar if you'
 **Save Preferences** will appear if the shoutbox is configured to use server-side profile fields as preference storage. This button will attempt to save the user's current settings for the doubtbox (name, avatar, volume level, channel, font-size, and doubtbox dimensions) to the supplied profile field.
 
 **[edit] and [X]** are functional to, and appear only for, administrator accounts (by default, user group 4 - change in CSS). These buttons allow staff to delete messages (with a confirmation dialogue), or edit messages including avatar, text content, name, and/or channel. Timestamps cannot be changed without navigating to */act=Shoutbox* and manually editing the timestamp variable.
+
+**Send** predictably sends the message, so long as the message field has content. While the message field has focus, the enter key will also send a message.
