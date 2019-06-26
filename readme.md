@@ -1,7 +1,7 @@
 # Doubtbox v.01
 * JQuery based c-box mimicry for JC Ink's default shoutbox
 * Requires JQuery 1.8+
-* Can allow BB code and HTML
+* BB/HTML markup integrated
 * Utilizes DOMPurify to filter dangerous messages
 * Coming soon to a Git near you
 
@@ -47,3 +47,13 @@ The doubtbox can configure message structure to specification. The following ele
 | *dbMsgBodyWrap* | span: Message content parent container | optional |
 | *dbMsgBody* | p: Message content element | required |
 
+# Usage & Notes
+It's important that the sum of the refresh timer is not set too low, nor the shoutPerPage set too high, as each refresh requests the shoutbox page *and* performs check functions to match message IDs and content length. While this is not strenuous for most computers, it is still something of a burden and ought to be minimized. If you want instantaneous updates, I'd recommend using an actual C-Box, or a Discord integration.
+
+Usage for the end-user is fairly straightforward, and should be familiar if you've ever used a c-box.
+**Previous** and *Next* buttons allow users to traverse message history, and suspend refreshing while viewing. Refreshing or sending a message will bring the user to the present content.
+**Channels** allow the staff to set up separate chatter areas for different topics. Remember that each channel technically shares the same refresh stream - if all of the recent messages belong to one channel, other channels will appear empty, even if there are messages for them further in the history. Unselected channel tabs with new content are modified with the *.doubtbox-new-messages* class.
+**Aa and aA** are font-size adjustments, affecting only the doubtbox.
+**🔊 🔉 🔈** are volume level icons, representing high (1.0), low (0.4), and mute (0.0) levels. These can be changed in CSS.
+**Save Preferences** will appear if the shoutbox is configured to use server-side profile fields as preference storage. This button will attempt to save the user's current settings for the doubtbox (name, avatar, volume level, channel, font-size, and doubtbox dimensions) to the supplied profile field.
+**[edit] and [X]** are functional to, and appear only for, administrator accounts (by default, user group 4 - change in CSS). These buttons allow staff to delete messages (with a confirmation dialogue), or edit messages including avatar, text content, name, and/or channel. Timestamps cannot be changed without navigating to */act=Shoutbox* and manually editing the timestamp variable.
