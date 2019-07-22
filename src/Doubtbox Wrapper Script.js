@@ -1,5 +1,5 @@
 let avatarElem = document.createElement('div');
-  avatarElem.innerHTML = `<!-- |avatar| -->`;
-  window.doubtboxAvatar = avatarElem.querySelector('img').getAttribute('src');
-  window.doubtboxPreferences = '<!-- |field_20| -->';
-  window.doubtboxAuth = '<!-- |auth_key| -->';
+avatarElem.innerHTML = `<!-- |avatar| -->`;
+window.doubtboxAvatar = avatarElem.querySelector('img').getAttribute('src');
+window.doubtboxPreferences = '<!-- |field_20| -->';
+window.doubtboxAuth = '<!-- |auth_key| -->';
