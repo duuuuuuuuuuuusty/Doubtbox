@@ -1,0 +1,1 @@
+let avatarElem=document.createElement("div");avatarElem.innerHTML="\x3c!-- |avatar| --\x3e",window.doubtboxAvatar=avatarElem.querySelector("img").getAttribute("src"),window.doubtboxPreferences="\x3c!-- |field_20| --\x3e",window.doubtboxAuth="\x3c!-- |auth_key| --\x3e";
