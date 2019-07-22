@@ -1,0 +1,265 @@
+  #doubtfulBigChonk {
+    height:calc(100% - 152px);
+    width: 100%;
+    overflow-y: scroll;
+  }
+  .doubtboxWrapper {
+    position: relative;
+    resize: both;
+    min-height: 400px;
+    min-width: 230px;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .doubtboxMessage {
+    width: 100%;
+    margin: 6px 0px;
+    word-wrap: break-word;
+    display: inline-block;
+  }
+  .dbUserAvatar {
+    float: left;
+    width: 50px;
+    margin-right: 5px;
+  }
+  .dbEditControl, .dbDelControl {
+    float: left;
+    padding: 0 2px;
+    cursor: pointer;
+  }
+  .dbMsgTime {
+    text-align: right;
+    display: block;
+  }
+  .dbMsgUser {
+    display: inline-block;
+    font-weight: bold;
+  }
+  .dbMsgUser::after {
+    content: ": ";
+    margin-right: 3px;
+  }
+  #dbMsgInput {
+    vertical-align: middle;
+    width: 77%;
+  }
+  #doubtboxPageRow {
+    font-size: .8em;
+    position: relative;
+    width: 100%;
+    height: 1.1em;
+    background: #e4e4e4;
+  }
+  .dbHistoryBack {
+    position:absolute;
+    left: 1em;
+    cursor: pointer;
+  }
+  .dbHistoryForward {
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+  }
+  .doubtboxMessage.doubtbox-hidden {
+    display: none;
+  }
+  #doubtboxPageRow[index='0'] .dbHistoryForward {
+    display: none;
+  }
+  #doubtboxUI {
+    padding: 4px 2px;
+    background: #e4e4e4;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+  }
+  #doubtboxUIrow1, #doubtboxUIrow2 {
+    padding: 1px;
+  }
+  #doubtboxChannelRow {
+    border-bottom: 2px solid gray;
+    font-size: .8em;
+    font-style: italic;
+    text-align: center;
+    height: 1.2em;
+    margin-top: 1px;
+  }
+.doubtbox-tab.doubtbox-tab-active {
+  background: lightgray;
+}
+.doubtbox-tab {
+  padding: 1px 4px;
+  bottom: 1px;
+  position:relative;
+  cursor: pointer;
+}
+  #doubtboxUI input {
+    font-size: 1em;
+    vertical-align: middle;
+  }
+  .doubtboxTitle {
+    border-bottom: 2px solid #333;
+    padding: 10px 0 3px;
+    vertical-align: middle;
+    width: 100%;
+    text-align: right;
+    font-size: 2em;
+  }
+  #dbUserInput {
+    width: 42%;
+  }
+  #dbUrlInput {
+    width: 50%;
+  }
+  .doubtbox-refresh,
+  .doubtbox-volume {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    margin-top: -.25em;
+  }
+  .doubtbox-volume[level='1']::after {
+    content: '🔊';
+  }
+  .doubtbox-volume[level='0.4']::after {
+    content: '🔉';
+  }
+  .doubtbox-volume[level='0']::after {
+    content: '🔈';
+  }
+  .doubtbox-ghost {
+    opacity: .5;
+  }
+  .dbMsgBody {
+    width: 100%;
+    margin: 0px;
+  }
+  .dbMsgBodyWrap {
+    display: inline;
+    white-space: pre-line;
+  }
+  .doubtbox-editing {
+    width: 200px;
+    background: #fff;
+    border: 1px solid lightblue;
+    box-shadow: 3px 3px 5px gray;
+    padding: 4px;
+  }
+.doubtbox-editing-url {
+    position: absolute;
+    background: #fff;
+    width: 202px;
+    box-shadow: 4px 4px 6px gray;
+    margin-top: 10px;
+    margin-left: -210px;
+}
+.doubtbox-edit-channel {
+    font-size: .8em;
+    float: left;
+}
+.doubtbox-editing .dbDelControl {
+    display: none;
+}
+.doubtbox-editing-url input {
+    display: block;
+    width: 98%;
+    margin: auto;
+}
+.doubtbox-url-accept, .doubtbox-url-reset {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+.doubtbox-url-reset {
+  background: lightgray;
+}
+.doubtbox-edit-cancel, .doubtbox-edit-confirm {
+  display: inline-block;
+  width:50%;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.doubtbox-edit-cancel {
+  background: lightgray;
+}
+.doubtbox-new-messages::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #ff6363;
+    left: -4px;
+    top: -4px;
+    border-radius: 100%;
+    box-shadow: 2px 2px 2px gray;
+    z-index: 1;
+}
+.doubtbox-control-row {
+  text-align: right;
+  margin-right: 5%;
+}
+.doubtbox-control-row span {
+  padding: 0 5px;
+  cursor: pointer;
+}
+.doubtbox-refresh div {
+  display: inline-block;
+}
+.doubtbox-size-larger, .doubtbox-size-smaller {
+  font-size:.8em;
+  font-variant: small-caps;
+}
+.doubtbox-size-larger:after, .doubtbox-size-smaller:before {
+  content: 'A';
+  font-size: 1.5em;
+}
+.doubtboxMessage:not(.doubtbox-hidden) ~ .dbStatusMessage {
+  display:none;
+}
+.dbEditControl, .dbDelControl {
+  display: none;
+}
+.doubtboxWrapper[userGroup="4"] .dbEditControl, .doubtboxWrapper[userGroup="4"] .dbDelControl {
+  display: inline;
+}
+@-webkit-keyframes doubtbox-spin/* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes doubtbox-spin {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: doubtbox-spin 2s linear infinite;
+  -moz-animation: doubtbox-spin 2s linear infinite;
+  -ms-animation: doubtbox-spin 2s linear infinite;
+  -o-animation: doubtbox-spin 2s linear infinite;
+  animation: doubtbox-spin 2s linear infinite;
+}
