@@ -6,11 +6,11 @@
 * Coming soon to a Git near you
 
 # Installation
-* Install to CSS, HTML, and JS to custom page. Use page <% TAG %> to append
-* Upload purify_min.js and append to page
-* Upload notification audio and append its source to _.doubtbox-audio_ element in page
-* Install doubtboxWrapper.js to **wrapper** body
-* Configure options in doubtboxWrapper.js
+* Install Body Script, CSS, and HTML to custom webpage (AIO is all three)
+* Install Wrapper Script to your skin's main wrapper, at the top (or at least before the custom webpage is called)
+* Upload notification audio and DOM Purify.js (Audio on git, DOM Purify can be found [here](https://github.com/cure53/DOMPurify "DOMPurify on Github"))
+* Append source URLs for notification audio and DOM Purify to the Doubtbox markup elements
+* Configure options for the Doubtbox as needed. Options that match their default value can be deleted
 
 | Option  | Inputs | Behavior | Default behavior |
 | ------------- | ------------- | ------------- | ------------- |
