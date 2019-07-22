@@ -228,6 +228,17 @@
 .doubtboxWrapper[userGroup="4"] .dbEditControl, .doubtboxWrapper[userGroup="4"] .dbDelControl {
   display: inline;
 }
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
 @-webkit-keyframes doubtbox-spin/* Safari and Chrome */ {
   from {
     -webkit-transform: rotate(0deg);
