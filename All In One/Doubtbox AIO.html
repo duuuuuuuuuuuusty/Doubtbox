@@ -1,0 +1,1010 @@
+<style>
+  #doubtfulBigChonk {
+    height:calc(100% - 152px);
+    width: 100%;
+    overflow-y: scroll;
+  }
+  .doubtboxWrapper {
+    position: relative;
+    resize: both;
+    min-height: 400px;
+    min-width: 230px;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .doubtboxMessage {
+    width: 100%;
+    margin: 6px 0px;
+    word-wrap: break-word;
+    display: inline-block;
+  }
+  .dbUserAvatar {
+    float: left;
+    width: 50px;
+    margin-right: 5px;
+  }
+  .dbEditControl, .dbDelControl {
+    float: left;
+    padding: 0 2px;
+    cursor: pointer;
+  }
+  .dbMsgTime {
+    text-align: right;
+    display: block;
+  }
+  .dbMsgUser {
+    display: inline-block;
+    font-weight: bold;
+  }
+  .dbMsgUser::after {
+    content: ": ";
+    margin-right: 3px;
+  }
+  #dbMsgInput {
+    vertical-align: middle;
+    width: 77%;
+  }
+  #doubtboxPageRow {
+    font-size: .8em;
+    position: relative;
+    width: 100%;
+    height: 1.1em;
+    background: #e4e4e4;
+  }
+  .dbHistoryBack {
+    position:absolute;
+    left: 1em;
+    cursor: pointer;
+  }
+  .dbHistoryForward {
+    position: absolute;
+    right: 1em;
+    cursor: pointer;
+  }
+  .doubtboxMessage.doubtbox-hidden {
+    display: none;
+  }
+  #doubtboxPageRow[index='0'] .dbHistoryForward {
+    display: none;
+  }
+  #doubtboxUI {
+    padding: 4px 2px;
+    background: #e4e4e4;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+  }
+  #doubtboxUIrow1, #doubtboxUIrow2 {
+    padding: 1px;
+  }
+  #doubtboxChannelRow {
+    border-bottom: 2px solid gray;
+    font-size: .8em;
+    font-style: italic;
+    text-align: center;
+    height: 1.2em;
+    margin-top: 1px;
+  }
+.doubtbox-tab.doubtbox-tab-active {
+  background: lightgray;
+}
+.doubtbox-tab {
+  padding: 1px 4px;
+  bottom: 1px;
+  position:relative;
+  cursor: pointer;
+}
+  #doubtboxUI input {
+    font-size: 1em;
+    vertical-align: middle;
+  }
+  .doubtboxTitle {
+    border-bottom: 2px solid #333;
+    padding: 10px 0 3px;
+    vertical-align: middle;
+    width: 100%;
+    text-align: right;
+    font-size: 2em;
+  }
+  #dbUserInput {
+    width: 42%;
+  }
+  #dbUrlInput {
+    width: 50%;
+  }
+  .doubtbox-refresh,
+  .doubtbox-volume {
+    float: right;
+    font-size: 1.5em;
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    margin-top: -.25em;
+  }
+  .doubtbox-volume[level='1']::after {
+    content: '🔊';
+  }
+  .doubtbox-volume[level='0.4']::after {
+    content: '🔉';
+  }
+  .doubtbox-volume[level='0']::after {
+    content: '🔈';
+  }
+  .doubtbox-ghost {
+    opacity: .5;
+  }
+  .dbMsgBody {
+    width: 100%;
+    margin: 0px;
+  }
+  .dbMsgBodyWrap {
+    display: inline;
+    white-space: pre-line;
+  }
+  .doubtbox-editing {
+    width: 200px;
+    background: #fff;
+    border: 1px solid lightblue;
+    box-shadow: 3px 3px 5px gray;
+    padding: 4px;
+  }
+.doubtbox-editing-url {
+    position: absolute;
+    background: #fff;
+    width: 202px;
+    box-shadow: 4px 4px 6px gray;
+    margin-top: 10px;
+    margin-left: -210px;
+}
+.doubtbox-edit-channel {
+    font-size: .8em;
+    float: left;
+}
+.doubtbox-editing .dbDelControl {
+    display: none;
+}
+.doubtbox-editing-url input {
+    display: block;
+    width: 98%;
+    margin: auto;
+}
+.doubtbox-url-accept, .doubtbox-url-reset {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+.doubtbox-url-reset {
+  background: lightgray;
+}
+.doubtbox-edit-cancel, .doubtbox-edit-confirm {
+  display: inline-block;
+  width:50%;
+  text-align: center;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.doubtbox-edit-cancel {
+  background: lightgray;
+}
+.doubtbox-new-messages::after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #ff6363;
+    left: -4px;
+    top: -4px;
+    border-radius: 100%;
+    box-shadow: 2px 2px 2px gray;
+    z-index: 1;
+}
+.doubtbox-control-row {
+  text-align: right;
+  margin-right: 5%;
+}
+.doubtbox-control-row span {
+  padding: 0 5px;
+  cursor: pointer;
+}
+.doubtbox-refresh div {
+  display: inline-block;
+}
+.doubtbox-size-larger, .doubtbox-size-smaller {
+  font-size:.8em;
+  font-variant: small-caps;
+}
+.doubtbox-size-larger:after, .doubtbox-size-smaller:before {
+  content: 'A';
+  font-size: 1.5em;
+}
+.doubtboxMessage:not(.doubtbox-hidden) ~ .dbStatusMessage {
+  display:none;
+}
+.dbEditControl, .dbDelControl {
+  display: none;
+}
+.doubtboxWrapper[userGroup="4"] .dbEditControl, .doubtboxWrapper[userGroup="4"] .dbDelControl {
+  display: inline;
+}
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+@-webkit-keyframes doubtbox-spin/* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes doubtbox-spin {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: doubtbox-spin 2s linear infinite;
+  -moz-animation: doubtbox-spin 2s linear infinite;
+  -ms-animation: doubtbox-spin 2s linear infinite;
+  -o-animation: doubtbox-spin 2s linear infinite;
+  animation: doubtbox-spin 2s linear infinite;
+}
+</style>
+
+<audio class="doubtbox-audio" src="../Audio/notification.mp3" preload="none"></audio>
+<div class="doubtboxWrapper" text="1.0">
+  <div class="doubtboxTitle">Shoutbox</div>
+  <div id="doubtboxChannelRow">
+  </div>
+  <div id="doubtfulBigChonk" role="log" aria-live="polite" aria-atomic="false"><span class="dbStatusMessage">"Loading..</span></div>
+  <div id="doubtboxUI">
+    <div id="doubtboxPageRow" index="0"><span class="dbHistoryBack">Previous</span><span class="dbHistoryForward">Next</span></div>
+    <div id="doubtboxUIrow1">
+      <label for="dbUserInput" class="visuallyhidden">Chat box Nickname</label>
+      <input type="text" id="dbUserInput" placeholder="Nickname" value="<!-- |name| -->">
+      <label for="dbUrlInput" class="visuallyhidden">Chat box Avatar</label>
+      <input type="text" id="dbUrlInput" placeholder="URL">
+    </div>
+    <div id="doubtboxUIrow2">
+      <label for="doubtboxMsgInput" class="visuallyhidden">Enter your message</label>
+      <input type="text" placeholder="Enter your message.." id="doubtboxMsgInput" autocomplete="off">
+      <input type="button" value="Send" id="msgsend">
+      <div class="doubtbox-control-row">
+            <br/><span class="doubtbox-size-smaller" title="Smaller Font" aria-label="Smaller Font">A</span>
+            <span class="doubtbox-size-larger" title="Larger Font" aria-label="Larger Font">A</span>
+            <span class="icon doubtbox-volume" level="1" title="Chat Volume" aria-label="Chat Volume"></span>
+            <span class="icon doubtbox-refresh" title="Refresh Chat" aria-label="Refresh Chat"><div></div></span>
+      </div>
+  </div>
+  </div>
+</div>
+<script src="../Scripts/purify_min.js"></script>
+
+<script>
+  $doubtBox({
+    timestamp: 'relative', //Message time-stamp type: 'X minute ago' or
+    username: 'custom', // default, custom.
+    defaultUsername: '<!-- |field_1| -->', //profile field is preferred input
+    typeOfID: 'parent', //parent ID, user ID
+    avatar: 'default',// default, custom.
+    allowMarkup: 'bb', //none, bb, html, both
+    customMarkup: '<div class="doubtboxMessage"><span class="dbMsgInnerWrap"><img class="dbUserAvatar"><span class="dbEditControl">[edit]</span><span class="dbDelControl">[X]</span><span class="dbMsgTime"></span><span class="dbMsgUser"><a></a></span><span class="dbMsgBodyWrap"><p class="dbMsgBody"></p></span></span></div>', // Default (c-box style) or custom
+    channels: ['Announcements', 'Out of Character', 'In-character'],// listed, off
+    defaultChannel: 'cache', // specified, 'cache', off
+    volumeLevels: [1, .4, 0],// user-defined, default
+    shoutPerPage: 10,//integer should match shoutbox settings, default: 100;
+    invertFlow: false, //true, false(default)
+    refreshType: 'interval',//Interval, off
+    refreshBase: 5000,
+    refreshDecay: 2000, //every empty refresh, add this to Base for refresh timer
+    refreshDecayReset: 10, //after X refreshes, reset timer to base
+    settingsStorage: 'field_20',//Cache, profile-field-number, off
+    shoutSource: '/index.php?act=Shoutbox'//Default, +skinid
+  })
+
+  function $doubtBox(options) {
+    timestamp = options.timestamp || 'absolute';
+    username = options.username || 'default';
+    defaultUsername = options.defaultUsername || null;
+    typeOfID = options.typeOfID || 'default';
+    avatar = options.avatar || 'default';
+    allowMarkup = options.allowMarkup || 'bb';
+    customMarkup = options.customMarkup || '<div class="doubtboxMessage"><span class="dbMsgInnerWrap"><img class="dbUserAvatar"><span class="dbEditControl">[edit]</span><span class="dbDelControl">[X]</span><span class="dbMsgTime"></span><span class="dbMsgUser"><a></a></span><span class="dbMsgBodyWrap"><p class="dbMsgBody"></p></span></span></div>';
+    channels = options.channels || ['Chat'];
+    defaultChannel = options.defaultChannel || 'Chat';
+    volumeLevels = options.volumeLevels || [1, .4, 0];
+    shoutPerPage = options.shoutPerPage || 20;
+    invertFlow = options.invertFlow || null;
+    refreshType = options.refreshType || 'interval';
+    refreshBase = options.refreshBase || 5000;
+    refreshDecay = options.refreshDecay || 1000;
+    refreshDecayReset = options.refreshDecayReset || 20;
+    settingsStorage = options.settingsStorage || null;
+    shoutSource = options.shoutSource || '/index.php?act=Shoutbox';
+    var refreshCount = 0,
+      pageIndex = 0,
+      c = 0,
+      v = 0,
+      localMessages = [];
+  
+    let mutationTarget = document.getElementById('doubtfulBigChonk'),
+      mutationConfig = {
+        childList: true
+      },
+      mutationCallback = function(mutationsList, watcher) {
+        for (var mutation of mutationsList) {
+          for (var i = 0; i < mutation.removedNodes.length; i++) {
+            var removedID = $(mutation.removedNodes[i]).attr('messageid'),
+              removedIndex = localMessages.indexOf(removedID);
+            if (removedID && removedIndex != -1) {
+              console.log('Watcher log: nod removal: ', removedID, ' at ', removedIndex, localMessages)
+              removedIndex == localMessages.length - 1 ? removedIndex = -1 : removedIndex = removedIndex;
+              localMessages.splice(removedIndex, 1)
+            }
+          }
+          for (var i = 0; i < mutation.addedNodes.length; i++) {
+            if (!$(mutation.addedNodes[i]).hasClass('doubtbox-ghost')) {
+              var addedID = $(mutation.addedNodes[i]).attr('messageid');
+              if (addedID > 0 && localMessages.indexOf(addedID) == -1) {
+                localMessages.push(addedID)
+              }
+              console.log('Watcher log: node addition: ', addedID, localMessages)
+            }
+          }
+        }
+      },
+      watcher = new MutationObserver(mutationCallback);
+    watcher.observe(mutationTarget, mutationConfig);
+  
+    const sleep = (milliseconds) => {
+      return new Promise(resolve => setTimeout(resolve, milliseconds))
+    }
+  
+    $.fn.fadeToRemove = function() {
+      $(this).fadeOut(400, function() {
+        $(this).remove()
+      })
+    };
+  
+    function stopProp() {
+      window.clearTimeout(sbTimer);
+      sbTimer = null;
+    }
+    $('.doubtbox-size-larger').click(function() {
+      var state = parseFloat($('.doubtboxWrapper').attr('text'));
+      $('.doubtboxWrapper').attr('text', state + .2).css('font-size', state + .2 + 'em')
+    })
+  
+    $('.doubtbox-size-smaller').click(function() {
+      var state = parseFloat($('.doubtboxWrapper').attr('text'));
+      $('.doubtboxWrapper').attr('text', state - .2).css('font-size', state - .2 + 'em')
+    })
+  
+    $('.doubtbox-refresh').click(function() {
+      stopProp();
+      mainOps();
+    })
+  
+    $('.doubtbox-volume').click(function(e) {
+      v++
+      v > volumeLevels.length - 1 ? v = 0 : v
+      $('.doubtbox-audio')[0].volume = volumeLevels[v]
+      $(e.target).attr('level', volumeLevels[v])
+    })
+  
+    $('.dbHistoryBack, .dbHistoryForward').click(function(e) {
+      pageIndex = pageIndex + parseInt($(e.target).attr('jump'))
+      $('#doubtboxPageRow').attr('index', pageIndex)
+      if (pageIndex <= 0) {
+        pageIndex = 0;
+        refreshCount = 0;
+      } else {
+        stopProp();
+      }
+      mainOps('silent', pageIndex)
+    })
+  
+    $(document).on('click', '.doubtbox-tab', function() {
+      $('.doubtbox-tab-active').removeClass('doubtbox-tab-active')
+      $(this).addClass('doubtbox-tab-active').removeClass('doubtbox-new-messages')
+      $('.doubtboxMessage.doubtbox-hidden').removeClass('doubtbox-hidden')
+      $('.doubtboxMessage:not(.doubtboxMessage[channel="' + $(this).attr('tab') + '"])').addClass('doubtbox-hidden')
+    })
+  
+    $('#dbSendBtn').click(function() {
+      var newMessage = {};
+      newMessage.timestamp = Date.now().toString();
+      newMessage.channel = $('.doubtbox-tab-active').attr('tab') || '';
+      newMessage.username = $('#dbUserInput').val();
+      if (!newMessage.username) {
+        newMessage.username = '<!-- |name| -->' || 'Guest';
+      }
+      if (typeOfID == 'parent' && parseInt('<!-- |parent_id| -->') > 0) {
+        newMessage.userID = '<!-- |parent_id| -->' || '0';
+      } else {
+        newMessage.userID = '<!-- |id| -->' || '0';
+      }
+      newMessage.group = '<!-- |g_id| -->';
+      avatar == 'default' ? newMessage.avatar = doubtboxAvatar || '' : newMessage.avatar = $('#dbUrlInput').val() || ''
+      newMessage.content = $('#dbMsgInput').val()
+  
+      if ($('#dbMsgInput').val()) {
+        assembler(newMessage, function(ghostReturn) {
+          $(ghostReturn).addClass('doubtbox-ghost')
+          invertFlow ? $(ghostReturn).insertBefore('.dbStatusMessage') : $('#doubtfulBigChonk').prepend(ghostReturn)
+        })
+        $.post("/index.php?act=Shoutbox&submit=Shout", {
+          Post: JSON.stringify(newMessage)
+        }).done(function() {
+          stopProp();
+          $('#doubtboxPageRow').attr('index', 0);
+          $('#dbMsgInput').val('');
+          mainOps('silent');
+          scrollyBoy(true);
+        });
+      } else {
+        alert('Please enter a message')
+      }
+    })
+  
+    $(document).on('click', '.dbEditControl', function() {
+      $(this).hide()
+      stopProp();
+      var p = $(this).parents('.doubtboxMessage');
+      $('<span class="doubtbox-edit-channel" contenteditable>' + p.attr('channel') + '</span>').insertBefore($(this))
+      $('<span class="doubtbox-edit-confirm">Confirm</span><span class="doubtbox-edit-cancel">Discard</span>').appendTo(p)
+      p.addClass('doubtbox-editing')
+      p.find('.dbMsgUser a').attr('contenteditable', true).on('click', function(e) {
+        e.preventDefault();
+      })
+      p.find('.dbMsgBody').attr('contenteditable', true)
+      p.find('.dbUserAvatar').click(function() {
+        $('<div class="doubtbox-editing-url"><input type="text" value="' + $(this).attr('src') + '"><div class="doubtbox-url-accept">Confirm</div><div class="doubtbox-url-reset">Discard</div></div>').prependTo(p)
+      })
+    })
+  
+    $(document).on('click', '.doubtbox-url-accept', function() {
+      $(this).parents('.doubtboxMessage').find('.dbUserAvatar').attr('src', $(this).siblings('input').val());
+      $(this).parent('div').fadeToRemove();
+    })
+  
+    $(document).on('click', '.doubtbox-url-reset', function() {
+      $(this).parent('div').fadetoRemove();
+    })
+  
+    $(document).on('click', '.dbDelControl', function() {
+      if (confirm('Delete this shout?')) {
+        stopProp();
+        $.post('/index.php?&act=Shoutbox&sbmod=03&sid=' + $(this).attr('mid'))
+        $(this).parents('.doubtboxMessage').fadeToRemove();
+        mainOps('silent');
+      }
+    })
+  
+    $(document).on('click', '.doubtbox-edit-confirm', function() {
+      let p = $(this).parents('.doubtboxMessage'),
+        e = JSON.parse(p.attr('history')),
+        id = p.attr('messageid');
+      delete e.messageID
+      e.content = p.find('.dbMsgBody').text()
+      e.username = p.find('.dbMsgUser').text()
+      e.avatar = p.find('.dbUserAvatar').attr('src')
+      e.channel = p.find('.doubtbox-edit-channel').text()
+      var form = new FormData();
+      form.append('Post', JSON.stringify(e))
+      form.append('submit', 'Edit Shout')
+      $.ajax('/index.php?act=Shoutbox&sbmod=05&sid=' + id, {
+        type: "POST",
+        processData: false,
+        contentType: false,
+        data: form
+      }).done(function(data) {
+        ($(data).find('.postcolor').text().length > 0) ? (confirm($(data).find('.postcolor').text())) : p.find('.doubtbox-edit-cancel').trigger('click');
+      })
+    })
+  
+    $(document).on('click', '.doubtbox-edit-cancel', function() {
+      var p = $(this).parents('.doubtboxMessage')
+      p.removeClass('doubtbox-editing')
+      p.find('.doubtbox-edit-confirm, .doubtbox-edit-cancel, .doubtbox-editing-url, .doubtbox-edit-channel').fadeToRemove();
+      p.find('.dbMsgUser a, .dbMsgBody').attr('contenteditable', false).off()
+      p.find('.dbEditControl').fadeIn(400)
+      stopProp();
+      mainOps('silent');
+    })
+  
+    $('#dbMsgInput').keydown(function(e) {
+      var kP = e.keyCode || e.which;
+      if (kP == 13) {
+        $('#dbSendBtn').trigger('click')
+      }
+    });
+
+    $(function mainOps(type, index) {
+      $('.doubtbox-refresh div').addClass('rotating');
+      c++;
+      var url;
+      index ? url = shoutSource + '&start=' + index : url = shoutSource;
+  
+      fetchData(url, function(messageData) {
+        if (c > 1) {
+          for (var i = 0; i < messageData.length; i++) {
+            var e = messageData[i],
+              chkContent = e.content.length.toString(),
+              chkName = e.username || '',
+              chkAv = e.avatar || '',
+              chkChannel = e.channel || '',
+              chkObj = $('.doubtboxMessage[messageid="' + e.messageID + '"]'),
+              eL = JSON.stringify(e);
+            if (chkObj.length > 0 && !chkObj.hasClass('doubtbox-ghost') && parseInt(chkObj.attr('chksum')) !== eL.length) { //that's a lot of conditions
+              var modify = [];
+              chkContent !== chkObj.attr('chksum') ? modify.push('content') : null;
+              chkName != chkObj.find('.dbMsgUser').text() ? modify.push('username') : null;
+              chkAv != chkObj.find('.dbUserAvatar').attr('src') ? modify.push('avatar') : null;
+              chkChannel !== chkObj.attr('channel') ? modify.push('channel') : null;
+              if (modify.length > 0) {
+                console.log(modify);
+                assembler(e, function($nM) {
+                  for (var i = 0; i < modify.length; i++) {
+                    switch (modify[i]) {
+                      case 'content':
+                        chkObj.find('.dbMsgBody').replaceWith($nM.find('.dbMsgBody'));
+                        break;
+  
+                      case 'username':
+                        chkObj.find('.dbMsgUser a').text(e.username);
+                        break;
+  
+                      case 'avatar':
+                        chkObj.find('.dbUserAvatar').attr('src', e.avatar);
+                        break;
+  
+                      case 'channel':
+                        chkObj.attr('channel', e.channel)
+                        break;
+                    }
+                  }
+                  chkObj.attr('chksum', JSON.stringify(e).length)
+                })
+  
+              }
+            }
+          }
+        }
+        var newSet = [];
+        for (var i = 0; i < messageData.length; i++) {
+          newSet.push(messageData[i].messageID)
+        }
+        var sortedNew = newSet.slice(0);
+        if (invertFlow) {
+          localMessages.sort((a, b) => a - b);
+          sortedNew.sort((a, b) => a - b)
+        } else {
+          localMessages.sort((a, b) => b - a);
+          sortedNew.sort((a, b) => b - a)
+        }
+        console.log('pre-flight check: ', localMessages, sortedNew)
+        if (localMessages.length != newSet.length || !(localMessages.every((value, index) => value === sortedNew[index]))) {
+          refreshCount = 0;
+          if (c > 1 && !index) {
+            var loadedSet = [];
+            $('.doubtboxMessage:not(.doubtbox-ghost)').each(function() {
+              loadedSet.push($(this).attr('messageID'))
+            })
+            var updateSet = newSet.filter(x => !loadedSet.includes(x)),
+              deleteSet = loadedSet.filter(x => !newSet.includes(x)),
+              updateObj = messageData.filter(x => updateSet.includes(x.messageID));
+            console.log(loadedSet, updateSet, updateObj)
+            console.log('---------------')
+            console.log(deleteSet)
+            if (updateSet <= 0) {
+              type = 'silent';
+            }
+            for (var i = 0; i < deleteSet.length; i++) {
+              $('.doubtboxMessage[messageid="' + deleteSet[i] + '"]').fadeToRemove();
+            }
+            invertFlow ? updateObj.reverse() : null
+            updateObj.forEach(function(e) {
+              assembler(e, function($newMessage) {
+                $('.doubtbox-ghost').each(function() {
+                  if ($(this).find('.dbMsgTime').attr('time') == e.timestamp) {
+                    $(this).attr('messageid', e.messageID).removeClass('doubtbox-ghost')
+                    $(this).find('.dbEditControl, .dbDelControl').attr('mid', e.messageID)
+                    $(this).find('.dbMsgBody').replaceWith($newMessage.find('.dbMsgBody'))
+                    $newMessage = $(this);
+                  }
+                })
+                if (invertFlow) {
+                  orderedSet = newSet.sort((a, b) => a - b),
+                    a = orderedSet.indexOf(e.messageID);
+                  console.log(orderedSet, a, e.messageID)
+                  if (a >= $('.doubtboxMessage').length) {
+                    $newMessage.insertBefore('.dbStatusMessage')
+                  } else if (a == 0) {
+                    $newMessage.prependTo('#doubtfulBigChonk')
+                  } else {
+                    $newMessage.insertAfter('.doubtboxMessage[messageid="' + orderedSet[a - 1] + '"]')
+                    console.log('placing ', e.messageID, ' at ', $('.doubtboxMessage[messageid="' + orderedSet[a - 1] + '"]'))
+                  }
+                } else {
+                  orderedSet = newSet.sort((a, b) => b - a),
+                    a = orderedSet.indexOf(e.messageID);
+                  console.log(orderedSet, a, e.messageID);
+                  if (a >= $('.doubtboxMessage').length) {
+                    $newMessage.insertBefore('.dbStatusMessage')
+                  } else if (a == 0) {
+                    $newMessage.prependTo('#doubtfulBigChonk')
+                  } else {
+                    $newMessage.insertBefore('.doubtboxMessage[messageid="' + orderedSet[a + 1] + '"]')
+                    console.log('placing ', e.messageID, ' at ', $('.doubtboxMessage[messageid="' + orderedSet[a + 1] + '"]'))
+                  }
+                }
+                if (type != 'silent' && channels) {
+                  $('.doubtbox-tab:not(.doubtbox-tab-active)[tab="' + e.channel + '"]').addClass('doubtbox-new-messages')
+                }
+  
+              })
+              if ($('.doubtbox-tab-active').attr('tab') == e.channel) {
+                scrollyBoy();
+              }
+            })
+          } else {
+  
+            console.log('full refresh!')
+            $('.doubtboxMessage').remove();
+            $('.dbStatusMessage').text('Hm. There doesn\'t seem to be anything here..');
+            messageData.forEach(function(e) {
+              assembler(e, function(newMessage) {
+                invertFlow ? $(newMessage).prependTo('#doubtfulBigChonk') : $(newMessage).insertBefore('.dbStatusMessage')
+              })
+            })
+          }
+          (c >= 1 && localMessages.length > 0 && type != 'silent') ? $('.doubtbox-audio')[0].play(): null;
+        } else {
+          refreshCount++;
+          console.log('nothing new found;')
+        }
+        $('.doubtbox-refresh div').removeClass('rotating')
+        if (c <= 1) {
+          initialization();
+        }
+        if (timestamp == 'relative') {
+          $('.dbMsgTime').each(function() {
+            $(this).text(timeOps($(this).attr('time')))
+          })
+        }
+        if (refreshType == 'interval' && $('#doubtboxPageRow').attr('index') == 0) {
+          refreshCount >= refreshDecayReset ? refreshCount = 0 : refreshCount
+          window.sbTimer = null;
+          if (sbTimer != null) {
+            stopProp();
+          } else {
+            window.clearTimeout(sbTimer);
+            sbTimer = window.setTimeout(mainOps, refreshBase + (refreshDecay * refreshCount))
+          }
+        }
+      })
+    });
+  
+    function scrollyBoy(bigMood) {
+      let dBC = document.getElementById('doubtfulBigChonk');
+      var targetNodes = document.querySelectorAll('.doubtboxMessage:not(.doubtbox-hidden)'),
+        contentHeight = dBC.scrollHeight,
+        windowHeight = dBC.offsetHeight,
+        scrolledX = dBC.scrollTop,
+        targetMessage;
+      !targetNodes.length ? targetMessage = 0 : (invertFlow ? targetMessage = targetNodes[targetNodes.length - 1].scrollHeight : targetMessage = targetNodes[0].scrollHeight);
+      if (invertFlow) {
+        console.log('scroling inverted')
+        if (windowHeight + scrolledX >= contentHeight - targetMessage + 5 || bigMood) {
+          $('#doubtfulBigChonk').stop().animate({
+            scrollTop: contentHeight
+          }, 800);
+        }
+      } else {
+        console.log('scrolling LIKE A NORMAL GODDAMN HUMAN BEING')
+        if (scrolledX <= targetMessage + 5 || bigMood) {
+          $('#doubtfulBigChonk').stop().animate({
+            scrollTop: 0
+          }, 800);
+        }
+      }
+    }
+  
+    function markupParser(str) {
+      console.log(allowMarkup)
+      var parseElem = document.createElement('div'),
+        fragment = document.createDocumentFragment();
+      parseElem.innerHTML = str;
+      var message;
+  
+      switch (allowMarkup) {
+        case 'bb':
+          message = str;
+          break;
+  
+        case 'html':
+          for (var i = 0; i < parseElem.childNodes.length; i++) {
+            var a = parseElem.childNodes[i].cloneNode(true);
+            if (a.nodeType === 3) {
+              fragment.appendChild(document.createRange().createContextualFragment(a.nodeValue))
+            } else {
+              fragment.appendChild(document.createTextNode(a.innerText))
+            }
+          }
+          message = fragment;
+          break;
+  
+        case 'both':
+          for (var i = 0; i < parseElem.childNodes.length; i++) {
+            var a = parseElem.childNodes[i].cloneNode(true);
+            if (a.nodeType === 3) {
+              fragment.appendChild(document.createRange().createContextualFragment(a.nodeValue))
+            } else {
+              fragment.appendChild(a)
+            }
+          }
+          message = fragment;
+          break;
+  
+        case 'none':
+          for (var i = 0; i < parseElem.childNodes.length; i++) {
+            var a = parseElem.childNodes[i].cloneNode(true);
+            if (a.nodeType === 3) {
+              fragment.appendChild(document.createRange().createContextualFragment(a.nodeValue))
+            } else {
+              fragment.appendChild(a)
+            }
+          }
+          message = fragment
+          break;
+      }
+      message = DOMPurify.sanitize(message)
+      console.log('the message is ', message)
+      return message;
+    }
+    
+    function initialization() {
+      sleep(500).then(() => {
+        scrollyBoy(true);
+      })
+      if (username == 'default') {
+        $('input#dbUserInput').hide()
+      } else if (defaultUsername.length > 0 && '<!-- |g_id| -->' != '2') {
+        $('input#dbUserInput').val(defaultUsername)
+      }
+      if (avatar == 'default') {
+        $('input#dbUrlInput').val(doubtboxAvatar).hide()
+      }
+      for (var i = 0; i < channels.length; i++) {
+        $('<span class="doubtbox-tab" tab="' + channels[i] + '">' + channels[i] + '</span>').appendTo('#doubtboxChannelRow')
+      }
+      $('.dbHistoryForward').attr('jump', 0 - shoutPerPage)
+      $('.dbHistoryBack').attr('jump', shoutPerPage)
+  
+      var cachedPreferences;
+      if (settingsStorage == 'cache') {
+        if (localStorage.getItem('doubtboxPreferences')) {
+          cachedPreferences = JSON.parse(localStorage.getItem('doubtboxPreferences'))
+        }
+        $(window).on("beforeunload", function() {
+          let preferences = {};
+          preferences.fontSize = $('.doubtboxWrapper').attr('text');
+          preferences.boxSize = [$('.doubtboxWrapper').width(), $('.doubtboxWrapper').height()];
+          preferences.volume = $('.doubtbox-volume').attr('level');
+          preferences.username = $('#dbUserInput').val();
+          preferences.avatar = $('#dbUrlInput').val();
+          preferences.channel = $('.doubtbox-tab-active').attr('tab')
+          localStorage.setItem('doubtboxPreferences', JSON.stringify(preferences))
+        });
+      } else if (settingsStorage.indexOf('field') != -1) {
+        if (doubtboxPreferences) {
+          try {
+            cachedPreferences = JSON.parse($('<div></div>').html(doubtboxPreferences).text())
+          } catch (e) {
+            console.log(e)
+            cachedPreferences = '';
+          }
+        }
+        $('.doubtbox-control-row').prepend($('<span class="doubtbox-save-status"></span><span class="doubtbox-save-pref">Save Preferences</span>'))
+        $(document).on('click', '.doubtbox-save-pref', function() {
+          let preferences = {};
+          preferences.fontSize = $('.doubtboxWrapper').attr('text');
+          preferences.boxSize = [$('.doubtboxWrapper').width(), $('.doubtboxWrapper').height()];
+          preferences.volume = $('.doubtbox-volume').attr('level');
+          preferences.username = $('#dbUserInput').val();
+          preferences.avatar = $('#dbUrlInput').val();
+          preferences.channel = $('.doubtbox-tab-active').attr('tab')
+  
+          fetch('/index.php?act=UserCP&CODE=01')
+            .then(response => response.text())
+            .then(text => {
+              let parser = new DOMParser();
+              let res = parser.parseFromString(text, "text/html");
+              let result = {};
+              $.each($(res).find('form[name="theForm"]').serializeArray(), function() {
+                result[this.name] = this.value;
+              });
+              let formData = new FormData();
+              for (var key in result) {
+                formData.append(key, result[key])
+              }
+              formData.set(settingsStorage, JSON.stringify(preferences))
+              console.log(formData.get(settingsStorage))
+              fetch('/index.php?auth_key=' + doubtboxAuth, {
+                  method: 'POST',
+                  body: formData
+                }).then(response => response.text())
+                .then(text => {
+                  let parser = new DOMParser();
+                  let res = parser.parseFromString(text, "text/html");
+                  if ($(res).find('#redirect-screen').length > 0) {
+                    $('.doubtbox-save-status').text('Saved!').show(function() {
+                      $('.doubtbox-save-status').fadeOut(1200)
+                    })
+                  } else {
+                    $('.doubtbox-save-status').text('Failed!').show(function() {
+                      $('.doubtbox-save-status').fadeOut(1200)
+                    })
+                  }
+                })
+            })
+        })
+      }
+      if (cachedPreferences != '') {
+        $('.doubtboxWrapper').attr('text', cachedPreferences.fontSize).css('font-size', cachedPreferences.fontSize + 'em').width(cachedPreferences.boxSize[0]).height(cachedPreferences.boxSize[1]);
+        $('.doubtbox-volume').attr('level', cachedPreferences.volume);
+        v = volumeLevels.indexOf(parseFloat(cachedPreferences.volume));
+        $('.doubtbox-audio')[0].volume = cachedPreferences.volume;
+        $('#dbUserInput').val(cachedPreferences.username);
+        $('#dbUrlInput').val(cachedPreferences.avatar);
+        if (defaultChannel != 'cache' && $('.doubtbox-tab[tab="' + defaultChannel + '"]').length > 0) {
+          $('.doubtbox-tab[tab="' + defaultChannel + '"]').trigger('click')
+          console.log('1', $('.doubtbox-tab[tab="' + defaultChannel + '"]'))
+        } else if (defaultChannel == 'cache' && $('.doubtbox-tab[tab="' + cachedPreferences.channel + '"]').length > 0) {
+          $('.doubtbox-tab[tab="' + cachedPreferences.channel + '"]').trigger('click')
+          console.log('2', $('.doubtbox-tab[tab="' + cachedPreferences.channel + '"]'))
+        }
+      } else {
+        $('.doubtbox-tab:first').trigger('click')
+        console.log('3', $('.doubtbox-tab:first'))
+      }
+    }
+  
+    function assembler(messageData, callback) {
+      var newMessage = $.parseHTML(customMarkup),
+        $nM = $(newMessage),
+        nMstr = JSON.stringify(messageData);
+      $nM.attr('sb-gid', messageData.group).attr('sb-mid', messageData.userID).attr('channel', messageData.channel).attr('messageID', messageData.messageID).attr('chksum', nMstr.length).attr('history', nMstr)
+      if (messageData.channel != $('.doubtbox-tab-active').attr('tab')) {
+        $nM.addClass('doubtbox-hidden')
+      }
+      if (messageData.userID == '' || messageData.userID == '0') {
+        $nM.find('.dbMsgUser a').remove();
+        $('<span class="doubtboxGuest"></span>').text(messageData.username).appendTo($nM.find('.dbMsgUser'))
+      } else {
+        $nM.find('.dbMsgUser a').attr('href', '/index.php?showuser=' + messageData.userID).text(messageData.username)
+      }
+      if (allowMarkup === 'none') {
+        console.log(markupParser(messageData.content))
+        $nM.find('.dbMsgBody').text(markupParser(messageData.content))
+      } else {
+        console.log(messageData.messageID, ' running')
+        $nM.find('.dbMsgBody').append(markupParser(messageData.content))
+      }
+      $nM.find('.dbUserAvatar').attr('src', DOMPurify.sanitize(messageData.avatar))
+      $nM.find('.dbMsgTime').attr('time', messageData.timestamp).text(timeOps(messageData.timestamp))
+      $nM.find('.dbEditControl, .dbDelControl').attr('mid', messageData.messageID)
+      callback($nM)
+    }
+  
+    function timeOps(mDt) {
+      var t = new Date(parseInt(mDt)),
+        absoluteTime = t.toLocaleString('en-gb', {
+          day: "numeric",
+          month: "short",
+          year: "2-digit"
+        }) + ', ' + t.toLocaleString('en-gb', {
+          hour12: true,
+          hour: "numeric",
+          minute: "numeric"
+        })
+      if (timestamp == 'relative') {
+        var secondsPast = (Date.now() - new Date(parseInt(mDt))) / 1000,
+          str;
+        Math.sign(secondsPast) < 0 ? secondsPast = 0 : secondsPast = secondsPast;
+        switch (true) {
+          case (secondsPast < 60):
+            str = parseInt(secondsPast) + ' ' + ((secondsPast == 1) ? 'second' : 'seconds') + ' ago';
+            break;
+          case (secondsPast < 3600):
+            str = parseInt(secondsPast / 60) + ' ' + ((secondsPast / 60 <= 2) ? 'minute' : 'minutes') + ' ago';
+            break;
+          case (secondsPast < 86400):
+            str = parseInt(secondsPast / 3600) + ' ' + ((secondsPast / 3600 <= 2) ? 'hour' : 'hours') + ' ago';
+            break;
+          case (secondsPast < 604800):
+            str = parseInt(secondsPast / 86400) + ' ' + ((secondsPast / 86400 <= 2) ? 'day' : 'days') + ' ago';
+            break;
+          case (secondsPast < 1814400):
+            str = parseInt(secondsPast / 604800) + ' ' + ((secondsPast / 604800 <= 2) ? 'week' : 'weeks') + ' ago';
+            break;
+          default:
+            str = absoluteTime;
+        };
+      } else {
+        str = absoluteTime;
+      }
+      return str
+    }
+  
+    function fetchData(url, callback) {
+      fetch(url).then(response => response.text()).then(text => {
+        let parser = new DOMParser();
+        let data = parser.parseFromString(text, 'text/html');
+        let messageArray = [];
+        var dbH = $('.dbHistoryBack');
+        (dbH.is(':visible') && $(data).find('form[name="DShoutbox"] p:last a').length) ? dbH.show(): dbH.hide()
+        var messageDiv = $(data).find('form[name="DShoutbox"]').children('div:not(.pformstrip)')
+        for (var i = 0; i < messageDiv.length; i++) {
+          let savedMessage = $(messageDiv[i]).find('div:eq(1) span');
+          let formattedMessage = {};
+          try {
+            var parsedBody = JSON.parse(savedMessage.html());
+            if (Object.keys(parsedBody).length != 7) throw "Parsed message has invalid key counts: " + savedMessage.text();
+          } catch (e) {
+            var s = savedMessage.html(),
+              parsedBody = {};
+            s = s.substring(2, s.length - 2);
+            parsedBody.timestamp = s.substring(s.indexOf('"timestamp":""') + 13, s.indexOf('","', s.indexOf('"timestamp":"') + 13));
+            parsedBody.channel = s.substring(s.indexOf('"channel":"') + 11, s.indexOf('","', (s.indexOf('"channel":"') + 11)));
+            parsedBody.username = s.substring(s.indexOf('"username":"') + 12, s.indexOf('","', s.indexOf('"username":"') + 12));
+            parsedBody.userID = s.substring(s.indexOf('"userID":"') + 10, s.indexOf('","', s.indexOf('"userID":"') + 10));
+            parsedBody.group = s.substring(s.indexOf('"group":"') + 9, s.indexOf('","', s.indexOf('"group":"') + 9));
+            parsedBody.avatar = s.substring(s.indexOf('"avatar":"') + 10, s.indexOf('","', s.indexOf('"avatar":"') + 10));
+            parsedBody.content = s.substring(s.indexOf('"content":"') + 11);
+          }
+          let messageDetails = $(messageDiv[i]).find('.post1:last-of-type'),
+            userElement = messageDetails.children('a').eq(1);
+          (username == 'default') ? formattedMessage.username = userElement.text(): formattedMessage.username = parsedBody.username;
+          (avatar == 'default') ? formattedMessage.avatar = messageDetails.prev().children('img').attr('src'): formattedMessage.avatar = parsedBody.avatar;
+          (typeOfID == 'default') ? formattedMessage.userID = userElement.attr('href').slice(userElement.attr('href').lastIndexOf('=') + 1): formattedMessage.userID = parsedBody.userID;
+          formattedMessage.group = parsedBody.group;
+          formattedMessage.channel = parsedBody.channel;
+          formattedMessage.content = parsedBody.content;
+          formattedMessage.timestamp = parsedBody.timestamp;
+          formattedMessage.messageID = messageDetails.children('a').eq(0).text().substring(1);
+          messageArray.push(formattedMessage);
+        }
+        callback(messageArray)
+      })
+    }
+  }
+</script>
+
