@@ -1,0 +1,28 @@
+<audio class="doubtbox-audio" src="../Audio/notification.mp3" preload="none"></audio>
+<div class="doubtboxWrapper" text="1.0">
+  <div class="doubtboxTitle">Shoutbox</div>
+  <div id="doubtboxChannelRow">
+  </div>
+  <div id="doubtfulBigChonk" role="log" aria-live="polite" aria-atomic="false"><span class="dbStatusMessage">"Loading..</span></div>
+  <div id="doubtboxUI">
+    <div id="doubtboxPageRow" index="0"><span class="dbHistoryBack">Previous</span><span class="dbHistoryForward">Next</span></div>
+    <div id="doubtboxUIrow1">
+      <label for="dbUserInput">Chat box Nickname</label>
+      <input type="text" id="dbUserInput" placeholder="Nickname" value="<!-- |name| -->">
+      <label for="dbUrlInput">Chat box Avatar</label>
+      <input type="text" id="dbUrlInput" placeholder="URL">
+    </div>
+    <div id="doubtboxUIrow2">
+      <label for="doubtboxMsgInput">Enter your message</label>
+      <input type="text" placeholder="Enter your message.." id="doubtboxMsgInput" autocomplete="off">
+      <input type="button" value="Send" id="msgsend">
+      <div class="doubtbox-control-row">
+            <br/><span class="doubtbox-size-smaller" title="Smaller Font" aria-label="Smaller Font">A</span>
+            <span class="doubtbox-size-larger" title="Larger Font" aria-label="Larger Font">A</span>
+            <span class="icon doubtbox-volume" level="1" title="Chat Volume" aria-label="Chat Volume"></span>
+            <span class="icon doubtbox-refresh" title="Refresh Chat" aria-label="Refresh Chat"><div></div></span>
+      </div>
+  </div>
+  </div>
+</div>
+<script src="../Scripts/purify_min.js"></script>
