@@ -545,8 +545,8 @@
         $('#dbSendBtn').trigger('click')
       }
     });
-
-    $(function mainOps(type, index) {
+    mainOps();
+    function mainOps(type, index) {
       $('.doubtbox-refresh div').addClass('rotating');
       c++;
       var url;
@@ -710,7 +710,7 @@
           }
         }
       })
-    });
+    };
   
     function scrollyBoy(bigMood) {
       let dBC = document.getElementById('doubtfulBigChonk');
