@@ -15,7 +15,7 @@
     refreshBase: 5000,
     refreshDecay: 2000, //every empty refresh, add this to Base for refresh timer
     refreshDecayReset: 10, //after X refreshes, reset timer to base
-    settingsStorage: 'field_20',//Cache, profile-field-number, off
+    settingsStorage: 'cache',//Cache, profile-field-number, off
     shoutSource: '/index.php?act=Shoutbox'//Default, +skinid
   })
 
